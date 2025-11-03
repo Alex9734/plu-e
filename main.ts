@@ -2,8 +2,6 @@ namespace SpriteKind {
     export const LilGremlins = SpriteKind.create()
     export const a = SpriteKind.create()
 }
-let currentSpinners: Sprite[] = []
-let offset = 0
 scene.setBackgroundImage(img`
     8fffffffffffffffffffffffff88fffff88ffff8998889999999989988888989999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     ffffffffffffffffffffffffff8fffff88ff9f88889889999999989998888898999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -185,16 +183,4 @@ let mySprite2 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Enemy)
-controller.moveSprite(vessel)
-game.onUpdate(function () {
-    offset += 1
-    currentSpinners = sprites.allOfKind(SpriteKind.LilGremlins)
-    for (let index = 0; index <= currentSpinners.length - 1; index++) {
-        spriteutils.placeAngleFrom(
-        currentSpinners[index],
-        spriteutils.degreesToRadians(360 / currentSpinners.length * index + offset),
-        15,
-        mySprite2
-        )
-    }
-})
+controller.moveSprite(vessel, 100, 100)
