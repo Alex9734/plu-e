@@ -145,7 +145,7 @@ let my_enemy = sprites.create(img`
     . . . . . . . f . . . . . . . . 
     `, SpriteKind.LilGremlins)
 my_enemy.setScale(2, ScaleAnchor.Middle)
-let mySprite = sprites.create(img`
+let vessel = sprites.create(img`
     ....................
     ....................
     ....................
@@ -185,7 +185,7 @@ let mySprite2 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Enemy)
-controller.moveSprite(mySprite)
+controller.moveSprite(vessel)
 game.onUpdate(function () {
     offset += 1
     currentSpinners = sprites.allOfKind(SpriteKind.LilGremlins)
