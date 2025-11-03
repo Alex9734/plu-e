@@ -219,7 +219,9 @@ let mySprite3 = sprites.create(img`
     ffffffff22222222222ffffffff.....
     ........ffffffffffff............
     `, SpriteKind.Enemy)
+vessel.setStayInScreen(true)
 controller.moveSprite(vessel)
+mySprite3.setPosition(76, 112)
 game.onUpdate(function () {
     offset += 1
     currentSpinners = sprites.allOfKind(SpriteKind.LilGremlins)
@@ -231,4 +233,7 @@ game.onUpdate(function () {
         mySprite2
         )
     }
+})
+forever(function () {
+    mySprite3.x = vessel.x
 })
