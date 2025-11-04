@@ -2,7 +2,6 @@ namespace SpriteKind {
     export const LilGremlins = SpriteKind.create()
     export const a = SpriteKind.create()
 }
-let mySprite4: Sprite = null
 let currentSpinners: Sprite[] = []
 let offset = 0
 scene.setBackgroundImage(img`
@@ -220,42 +219,7 @@ let mySprite3 = sprites.create(img`
     ffffffff22222222222ffffffff.....
     ........ffffffffffff............
     `, SpriteKind.Enemy)
-let mySprite = sprites.create(img`
-    ..............222...............
-    .............22f2...............
-    .............2ff2...............
-    .............2ff2....222........
-    .............2ff2...22ff222.....
-    .............2ff2..2ffffff22....
-    ............22fff22fffffffff2...
-    .....22222222fffffffffffffff2...
-    ....22ffffffffffffffff2222fff2..
-    ....2fff2222222fffffff21122ff22.
-    ...2fff2211111122ffff2111112ff2.
-    ...2fff2111111112ffff21ffff22f2.
-    ..2fff2211ffff112ffff21ffff12f2.
-    ..2fff2111ffff112ffff21f22222f2.
-    ..2fff22222222222ffff222fffff222
-    ..2fffffffffffffffffffffffff2222
-    ..2ffffffffffffffffffffffff22ff2
-    .22ffffffffffffffffffffff222fff2
-    .22222fffffffffffffffff222ffff22
-    .2f2ff222222ff22222222f2fffff222
-    22f22ffffff2ff2ffffff2f2ffff22f2
-    2fff22222ff2ff2ffffff22ffff22ff2
-    2fffffff2fff22ffffffffffff2ffff2
-    2fffffff2fffffff2ffffff222fffff2
-    2fffffff22fffff222fff222fff2fff2
-    2fffffffff2ffff2f2f222ffff22fff2
-    2ffffffffff22222f22fffffff22fff2
-    2fffffff22ffffffffff2fffff2.2ff2
-    2ffffff2222ffffffff22fffff2.2222
-    .2ffff22..2fffffff2222ffff2.....
-    .22ff22....2222222...22ff22.....
-    ..2222................2222......
-    `, SpriteKind.Enemy)
 vessel.setStayInScreen(true)
-mySprite.setStayInScreen(true)
 controller.moveSprite(vessel)
 mySprite3.setPosition(76, 112)
 game.onUpdate(function () {
@@ -268,42 +232,6 @@ game.onUpdate(function () {
         15,
         mySprite2
         )
-    }
-})
-forever(function () {
-    mySprite.follow(vessel, 50)
-    pauseUntil(() => 0 == 0)
-    mySprite.follow(vessel, 0)
-    pause(1000)
-    mySprite4 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Food)
-    mySprite4.setPosition(mySprite.x, mySprite.y)
-    mySprite4.follow(vessel)
-    pause(10)
-    if (mySprite.vx > 0) {
-        sprites.destroy(mySprite4)
-        mySprite.setVelocity(100, 0)
-        pause(4000)
-    } else {
-        sprites.destroy(mySprite4)
-        mySprite.setVelocity(-100, 0)
-        pause(4000)
     }
 })
 forever(function () {
