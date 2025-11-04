@@ -2,9 +2,53 @@ namespace SpriteKind {
     export const LilGremlins = SpriteKind.create()
     export const a = SpriteKind.create()
 }
-let mySprite4: Sprite = null
+function jackenstar_attack () {
+    pauseUntil(() => dash == 1)
+    mySprite.follow(vessel, 0)
+    pause(1000)
+    mySprite4 = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Food)
+    mySprite4.setPosition(mySprite.x, mySprite.y)
+    mySprite4.follow(vessel)
+    pause(10)
+    if (mySprite4.vx > 0) {
+        sprites.destroy(mySprite4)
+        mySprite.setVelocity(100, 0)
+        pause(4000)
+        stop_dash_changing = 0
+        dash = 0
+    } else {
+        sprites.destroy(mySprite4)
+        mySprite.setVelocity(-100, 0)
+        pause(4000)
+        stop_dash_changing = 0
+        dash = 0
+    }
+}
+let mySprite5: Sprite = null
 let currentSpinners: Sprite[] = []
 let offset = 0
+let stop_dash_changing = 0
+let mySprite4: Sprite = null
+let dash = 0
+let mySprite: Sprite = null
+let vessel: Sprite = null
 scene.setBackgroundImage(img`
     8fffffffffffffffffffffffff88fffff88ffff8998889999999989988888989999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     ffffffffffffffffffffffffff8fffff88ff9f88889889999999989998888898999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -146,7 +190,7 @@ let my_enemy = sprites.create(img`
     . . . . . . . f . . . . . . . . 
     `, SpriteKind.LilGremlins)
 my_enemy.setScale(2, ScaleAnchor.Middle)
-let vessel = sprites.create(img`
+vessel = sprites.create(img`
     ....................
     ....................
     ....................
@@ -220,44 +264,52 @@ let mySprite3 = sprites.create(img`
     ffffffff22222222222ffffffff.....
     ........ffffffffffff............
     `, SpriteKind.Enemy)
-let mySprite = sprites.create(img`
-    ..............222...............
-    .............22f2...............
-    .............2ff2...............
-    .............2ff2....222........
-    .............2ff2...22ff222.....
-    .............2ff2..2ffffff22....
-    ............22fff22fffffffff2...
-    .....22222222fffffffffffffff2...
-    ....22ffffffffffffffff2222fff2..
-    ....2fff2222222fffffff21122ff22.
-    ...2fff2211111122ffff2111112ff2.
-    ...2fff2111111112ffff21ffff22f2.
-    ..2fff2211ffff112ffff21ffff12f2.
-    ..2fff2111ffff112ffff21f22222f2.
-    ..2fff22222222222ffff222fffff222
-    ..2fffffffffffffffffffffffff2222
-    ..2ffffffffffffffffffffffff22ff2
-    .22ffffffffffffffffffffff222fff2
-    .22222fffffffffffffffff222ffff22
-    .2f2ff222222ff22222222f2fffff222
-    22f22ffffff2ff2ffffff2f2ffff22f2
-    2fff22222ff2ff2ffffff22ffff22ff2
-    2fffffff2fff22ffffffffffff2ffff2
-    2fffffff2fffffff2ffffff222fffff2
-    2fffffff22fffff222fff222fff2fff2
-    2fffffffff2ffff2f2f222ffff22fff2
-    2ffffffffff22222f22fffffff22fff2
-    2fffffff22ffffffffff2fffff2.2ff2
-    2ffffff2222ffffffff22fffff2.2222
-    .2ffff22..2fffffff2222ffff2.....
-    .22ff22....2222222...22ff22.....
-    ..2222................2222......
+mySprite = sprites.create(img`
+    ...............33...............
+    ...............333..............
+    ..............3333..............
+    ..............33333.............
+    ..............33333.............
+    .............333333.............
+    .............3333333............
+    ............33333333............
+    ............333333333...........
+    ............333333333...........
+    ...........3322333333...........
+    333333.....32112333322..........
+    .333333333321ff123321123........
+    ..333333333222222321ff1233333...
+    ...33333333333333322222233333333
+    ....333333333333333333333333333.
+    .....3322222222222222222233333..
+    ......322ffffff222fffffff2333...
+    .......32fffffff2ffffffff233....
+    ........322ffffffffffffff23.....
+    .........332ffffffffffff22......
+    ..........332222222222223.......
+    .........333333333333333........
+    .........3333333.33333333.......
+    ........333333....3333333.......
+    .......333333......333333.......
+    .......3333.........33333.......
+    ......3333...........33333......
+    .....3333.............3333......
+    ....333................333......
+    ...333..................33......
+    ...33....................3......
     `, SpriteKind.Enemy)
 vessel.setStayInScreen(true)
 mySprite.setStayInScreen(true)
 controller.moveSprite(vessel)
 mySprite3.setPosition(76, 112)
+game.onUpdate(function () {
+    if (stop_dash_changing != 1) {
+        if (vessel.y - mySprite.y > -5 && vessel.y - mySprite.y < 5) {
+            stop_dash_changing = 1
+            dash = 1
+        }
+    }
+})
 game.onUpdate(function () {
     offset += 1
     currentSpinners = sprites.allOfKind(SpriteKind.LilGremlins)
@@ -271,41 +323,27 @@ game.onUpdate(function () {
     }
 })
 forever(function () {
-    mySprite.follow(vessel, 50)
-    pauseUntil(() => 0 == 0)
-    mySprite.follow(vessel, 0)
-    pause(1000)
-    mySprite4 = sprites.create(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Food)
-    mySprite4.setPosition(mySprite.x, mySprite.y)
-    mySprite4.follow(vessel)
-    pause(10)
-    if (mySprite.vx > 0) {
-        sprites.destroy(mySprite4)
-        mySprite.setVelocity(100, 0)
-        pause(4000)
-    } else {
-        sprites.destroy(mySprite4)
-        mySprite.setVelocity(-100, 0)
-        pause(4000)
-    }
-})
-forever(function () {
     mySprite3.x = vessel.x
+})
+game.onUpdateInterval(10000, function () {
+    sprites.destroyAllSpritesOfKind(SpriteKind.a)
+    mySprite5 = sprites.create(img`
+        44444444444444444444444444444444444
+        4fffffffffffffffffffffffffffffffff4
+        4fffffffffffffffffffffffffffffffff4
+        4ffffff4f4444f444f4444f4ff4f44444f4
+        4fffff44f4fffff4ff4ffff4ff4fff4fff4
+        4fffff44f4fffff4ff4ffff4ff4fff4fff4
+        4ffff444f4444ff4ff4ffff4ff4fff4fff4
+        4ff4f444f4fffff4ff4f44f4444fff4fff4
+        4f44444ff4fffff4ff4ff4f4ff4fff4fff4
+        4ff444fff4fffff4ff4ff4f4ff4fff4fff4
+        4f44444ff4fffff4ff4ff4f4ff4fff4fff4
+        4f44f4fff4ffff444f4444f4ff4fff4fff4
+        4fffffffffffffffffffffffffffffffff4
+        4fffffffffffffffffffffffffffffffff4
+        4fffffffffffffffffffffffffffffffff4
+        44444444444444444444444444444444444
+        `, SpriteKind.a)
+    mySprite5.setPosition(randint(9, 150), randint(9, 100))
 })
